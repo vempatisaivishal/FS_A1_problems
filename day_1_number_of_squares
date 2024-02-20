@@ -1,0 +1,73 @@
+ 1    /*Given a m * n matrix of ones and zeros, return how many square submatrices 
+    2   have all ones.
+    3 
+    4   Example 1:
+    5   Input: matrix =
+    6   0 1 1 1
+    7   1 1 1 1
+    8   0 1 1 1
+    9 Output: 15
+   10 Explanation: 
+   11 There are 10 squares of side 1.
+   12 There are 4 squares of side 2.
+   13 There is  1 square of side 3.
+   14 Total number of squares = 10 + 4 + 1 = 15.
+   15 
+   16 Example 2:
+   17 Input: matrix = 
+   18 1 0 1
+   19 1 1 0
+   20 1 1 0
+   21 Output: 7
+   22 Explanation: 
+   23 There are 6 squares of side 1.  
+   24 There is 1 square of side 2. 
+   25 Total number of squares = 6 + 1 = 7.
+   26  
+   27 Constraints:
+   28 1 <= arr.length <= 300
+   29 1 <= arr[0].length <= 300
+   30 0 <= arr[i][j] <= 1
+   31 */
+   32 import java.util.*;
+   33 class NOS{
+   34     public static void main(String[] args)
+   35     {
+   36         Scanner sc=new Scanner(System.in);
+   37         int n=sc.nextInt();
+   38         int m=sc.nextInt();
+   39         int [][]a=new int[n][m];
+   40         for(int i=0;i<n;i++)
+   41         {
+   42             for(int j=0;j<m;j++)
+   43             {
+   44                 a[i][j]=sc.nextInt();
+   45             }
+   46         }
+   47         int [][]dp=new int[n][m];
+   48         int c=0;
+   49         for(int i=0;i<n;i++)
+   50         {
+   51             dp[i][0]=a[i][0];
+   52             c+=dp[i][0];
+   53         }
+   54         for(int j=1;j<m;j++)
+   55         {
+   56             dp[0][j]=a[0][j];
+   57             c+=dp[0][j];
+   58         }
+   59         for(int i=1;i<n;i++)
+   60         {
+   61             for(int j=1;j<m;j++)
+   62             {
+   63                 if(a[i][j]==1)
+   64                 {
+   65                 dp[i][j]=Math.min(dp[i-1][j],Math.min(dp[i][j-1],dp[i-1][j-1]))+1;
+   66                 c+=dp[i][j];
+   67                 }
+   68             }
+   69         }
+   70         System.out.println(c);
+   71     }
+   72     
+   73 }
