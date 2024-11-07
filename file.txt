@@ -1,0 +1,87 @@
+install ollama:https://ollama.com/download
+ollama run mistral
+ollama run mistral --verbose
+pip install llama-index
+ollama serve
+https://github.com/ollama/ollama-python
+pip install ollama
+import ollama
+response = ollama.chat(model='mistral', messages=[
+  {
+    'role': 'user',
+    'content': 'Why is the sky blue?',
+  },
+])
+print(response['message']['content'])
+import ollama
+response = ollama.chat(model='mistral', messages=[
+  {
+    'role': 'user',
+    'content': 'I am a past smoker but right now I quitted the smoking, say I am former smoker or current smoker in one word',
+  },
+])
+print(response['message']['content'])
+from ollama import Client
+client = Client(host='http://localhost:11434')
+response = client.chat(model='mistral', messages=[
+  {
+    'role': 'user',
+    'content': 'Why is the sky blue?',
+  },
+])
+print(response['message']['content'])
+
+-------------------------------
+from ollama import Client
+client = Client(host='http://localhost:11434')
+text='''
+
+**Healthcare Report**
+
+---
+
+**Date:** 7th November 2024  
+**Prepared by:** Health Research Department  
+**Subject:** Analysis of Current Health Issues in Population
+
+---
+
+Cardiovascular issues have shown a significant increase globally, contributing heavily to mortality rates. The data indicates a rise in conditions affecting the heart and blood vessels, often linked to lifestyle factors, including dietary habits and physical inactivity. These conditions are further compounded by factors such as age, genetics, and rising obesity rates, impacting life expectancy and quality of life.
+
+Respiratory infections are also a major concern, with a noticeable increase in cases over the last decade. Particularly, conditions like chronic obstructive pulmonary disease have seen a rise due to prolonged exposure to pollutants and tobacco use. Emerging pathogens, seasonal outbreaks, and the increasing resistance of bacteria to traditional treatments continue to strain healthcare systems, emphasizing the need for preventive measures.
+
+Lastly, diabetes has shown a troubling upward trend, affecting a wide range of demographics. Rising blood sugar levels often go undetected until significant complications arise, impacting cardiovascular and renal health. Contributing factors include genetic predisposition, but lifestyle choices, including diet and exercise, remain pivotal in disease management and prevention.
+
+
+
+
+
+
+'''
+promp="I have organs now say in json which organs effect just by giving organ name and yes or no , the organs are lungs,heart, ear,nose,liver,legs,hands"
+response = client.chat(model='mistral', messages=[
+  {
+    'role': 'user',
+    'content': text+" "+promp,
+  },
+])
+print(response['message']['content'])
+
+
+
+ Here is the requested JSON format for the provided organs:
+
+```json
+{
+  "lungs": true,
+  "heart": true,
+  "ear": false,
+  "nose": false,
+  "liver": false,
+  "legs": false,
+  "hands": false
+}
+```
+In this JSON object:
+- A "true" value indicates that the organ is affected by health issues mentioned in the report.
+- A "false" value indicates that the organ is not directly affected by the health issues mentioned in the report.
